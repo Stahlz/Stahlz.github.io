@@ -34,7 +34,7 @@ h3:before {
 }
 
 .jumbotron {
-	background: black;
+	background: #617189;
 }
 
 .jumbotron h1 {
@@ -54,7 +54,7 @@ h3:before {
 	width: 100%;
 	/* Set the fixed height of the footer here */
 	height: 8em;
-	background-color: black;
+	background-color: #617189;
 	bottom: 0;
 }
 
@@ -100,7 +100,7 @@ h3:before {
 }
 
 .navbar-default .navbar-nav>li>.dropdown-menu {
-	background-color: black;
+	background-color: #617189;
 }
 
 .navbar-default .navbar-nav>li>.dropdown-menu>li>a {
