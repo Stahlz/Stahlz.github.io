@@ -38,6 +38,7 @@ comments: true
 		{% else %}		
 		<img
 			alt="{{ post.title }}"
+		     	style="width: 200px; height: 200px;"
 			src="/assets/images{{post.id}}/top.jpg" class="img-responsive">
 		{% endif %}
 		<p>{{ post.excerpt | strip_html}}</p>
