@@ -13,8 +13,8 @@
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
-title: The Non-Attributional Blog
-name: The Non-Attributional Blog
+title: The UnAttributable Blog
+name: The UnAttributable Blog
 description: 
   This goal of this Blog is to give you and tools and techniques to protect yourself. 
   It will focus on Hardware and Software solutions that can be used to give you privacy and security.
