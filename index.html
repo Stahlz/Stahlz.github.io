@@ -38,7 +38,8 @@ comments: true
 		{% else %}		
 		<img
 			alt="{{ post.title }}"
-			src="/assets/images{{post.id}}/top.jpg" style='height: 100%; width: 100%; object-fit: contain' class="img-responsive">
+		     	style="height: 100%; width: 100%; object-fit: contain" 
+			src="/assets/images{{post.id}}/top.jpg" class="img-responsive">
 		{% endif %}
 		<p>{{ post.excerpt | strip_html}}</p>
 		<a href="{{ post.url }}">Read more...</a>
