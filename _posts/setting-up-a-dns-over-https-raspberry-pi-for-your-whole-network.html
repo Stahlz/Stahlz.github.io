@@ -1,0 +1,246 @@
+---
+layout: default
+title: "Setting up a DNS-Over-Https Raspberry Pi for your whole network"
+#date: 2019-07-06 05:00:00 +0200
+#published: 2019-07-04 05:00:00 +0200
+comments: false
+categories: security
+tags: [security, privacy, pihole, D-O-H]
+github: "https://github.com/Stahlz/PiHole_Dns-Over-Https"
+---
+
+<p>
+	One of the major ways that ISP's gather information on users is by gathering information from their dns queries. 
+	This information can be useful for tracking a users shopping habits, their hobbies, etc. 
+	Encrypting these requests is actually pretty easy to accomplish, and solves a plethera of issues such as blocking 
+	malicious advertisements, and keeping internet service providers from monitoring your activities. 
+</p>
+
+<h3>Requirements</h3>
+
+{% highlight shell %}
+Raspberry Pi 1-3 (This might be possible on a Zero, haven't tested)
+8-16 GB SD Card
+keyboard
+Monitor that supports HDMI for inital install
+A micro sd Card reader/writer
+Internet Connection
+USB power or Raspberry Pi power cable
+{% endhighlight %}
+
+<h4>Download the raspian software</h4>
+
+<p>Download the Raspian Buster Lite Image</p>
+
+<a href="https://www.raspberrypi.org/downloads/raspbian/" rel="noopener noreferrer" target="_blank">Raspian Download</a>
+
+<a href="/assets/images/{{page.id}}/Raspian-Download.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/Raspian-Download.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<h4>Flash the image to the SD card</h4>
+
+<p>You can use whatever software you like, i go between: 
+<h5><a href="https://sourceforge.net/projects/win32diskimager/" rel="noopener noreferrer" target="_blank">Win32DiskImager</a></h5> 
+or 
+<h5><a href="https://https://www.balena.io/etcher/" rel="noopener noreferrer" target="_blank">Etcher</a></h5>
+</p>
+
+<p>Change the username pi password</p>
+
+{% highlight shell %}
+sudo passwd pi
+{% endhighlight %}
+
+<h4>Install Cloudflared</h4>
+
+<p>
+	Download the cloudflared binary, depending on which raspberry pi you use you have some issues.
+	The Raspberry Pi 2 seems to have a problem with never versions of CloudFlared.
+	If this version of cloudflared seg faults for you then try the RPI 2 option
+</p>
+
+{% highlight shell %}
+cd /tmp
+wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-amd64.deb
+dpkg -i cloudflared-stable-linux-amd64.deb
+cloudflared -v
+{% endhighlight %}
+
+<p>Rpi 2 Download if above seg faults</p>
+{% highlight shell %}
+
+
+<p>Make the Cloudflared User</p>
+
+{% highlight shell %}
+sudo useradd -r -M -s /usr/sbin/nologin -c "Cloudflared user" cloudflared
+sudo passwd -l cloudflared
+sudo chage -E 0 cloudflared
+{% endhighlight %}
+
+<p>Make the default file</p>
+
+{% highlight shell %}
+echo /etc/default/cloudflared >> "CLOUDFLARED_OPTS=--port 5053 --upstream https://1.1.1.1/dns-query --upstream https://1.0.0.1/dns-query"
+{% endhighlight %}
+
+<p>Permission the the Files</p>
+
+{% highlight shell %}
+sudo chown -v cloudflared:cloudflared /usr/local/bin/cloudflared
+sudo chown -v cloudflared:cloudflared /etc/default/cloudflared
+{% endhighlight %}
+
+<p>Make the Systemd File</p>
+
+{% highlight shell %}
+sudo vi /lib/systemd/system/cloudflared.service
+{% endhighlight %}
+
+<p>Copy this to the service file</p>
+
+{% highlight shell %}
+[Unit]
+Description=cloudflared DoH proxy
+After=syslog.target network-online.target
+ 
+[Service]
+Type=simple
+User=cloudflared
+EnvironmentFile=/etc/default/cloudflared
+ExecStart=/usr/local/bin/cloudflared proxy-dns $CLOUDFLARED_OPTS
+Restart=on-failure
+RestartSec=10
+KillMode=process
+ 
+[Install]
+WantedBy=multi-user.target
+{% endhighlight %}
+
+<p>Enable the Service and set it to autostart if device loses power or is restarted</p>
+
+{% highlight shell %}
+sudo systemctl enable cloudflared
+sudo systemctl start cloudflared
+sudo systemctl status cloudflared
+{% endhighlight %}
+
+<h4>Install PiHole</h4>
+
+<p>Download the installer and run it</p>
+
+{% highlight shell %}
+wget -O basic-install.sh https://install.pi-hole.net
+sudo bash basic-install.sh
+{% endhighlight %}
+
+<p>Run through the installer making these selections</p>
+
+<a href="/assets/images/{{page.id}}/1.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/1.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<a href="/assets/images/{{page.id}}/2.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/2.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<a href="/assets/images/{{page.id}}/3.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/3.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Please Make sure you Select eth0</p>
+
+<a href="/assets/images/{{page.id}}/4.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/4.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Select cloudFlare for now, it will be changed in the Gui after install</p>
+
+<a href="/assets/images/{{page.id}}/5.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/5.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Make sure all are selected</p>
+
+<a href="/assets/images/{{page.id}}/6.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/6.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Select both, or at least IPv4. Depending on your setup</p>
+
+<a href="/assets/images/{{page.id}}/7.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/7.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>This will show whatever IP address you are currently set as.
+   For most of you this wont need to be changed, however if for any reason you need to change this.
+   Take not of this you will need it to login to the GUI.
+</p>
+<p>
+   Command:
+   pihole -r
+</p>
+
+<a href="/assets/images/{{page.id}}/8.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/8.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<a href="/assets/images/{{page.id}}/9.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/9.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Install the WebGui</p>
+
+<a href="/assets/images/{{page.id}}/10.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/10.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<a href="/assets/images/{{page.id}}/11.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/11.jpg" alt="PiHole Dns-over-Https"/></a
+
+<a href="/assets/images/{{page.id}}/12.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/12.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Ignore this for now, we are going to change the WebGui from Command line</p>
+
+<a href="/assets/images/{{page.id}}/13.jpg"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/13.jpg" alt="PiHole Dns-over-Https"/></a>
+
+<p>Once the script is done running, run this to change the webgui Password as root</p>
+
+{% highlight shell %}
+pihole -a -p
+{% endhighlight %}
+
+<h4>Login into the webgui</h4>
+
+{% highlight shell %}
+http://http://<ip Address>/admin/
+{% endhighlight %}
+
+<a href="/assets/images/{{page.id}}/pihole-login.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/pihole-login.png" alt="PiHole Dns-over-Https"/></a>
+
+<p>UnCheck the Cloudflare section, and enter in the custom dns options below
+   Also, make sure to select the Advanced DNS Settings Below.
+</p>
+
+<a href="/assets/images/{{page.id}}/pihole-custom.png"> <img
+	class="center-block img-responsive"
+	src="/assets/images/{{page.id}}/pihole-custom.png" alt="PiHole Dns-over-Https"/></a>
+
+
+<h3>Troubleshooting</h3>
+
+<p>For issues with PiHole, run this command which will reconfigure the pihole instance</p>
+
+{% highlight shell %}
+pihole -r
+{% endhighlight %}
+
+<p>For issues with cloudflared, you might need to do some googling to find a cloudflared binary that works with your pi</p>
