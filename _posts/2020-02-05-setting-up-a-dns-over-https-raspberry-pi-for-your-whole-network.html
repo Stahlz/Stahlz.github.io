@@ -36,9 +36,9 @@ USB power or Raspberry Pi power cable
 
 <a href="/assets/images/{{page.id}}/Raspian-Download.jpg"> <img
 	class="center-block img-responsive"
-	src="/assets/images/{{page.id}}/Raspian-Download.jpg" alt="PiHole Dns-over-Https"/></a>
+	src="/assets/images/{{page.id}}/Raspian-Download.jpg" alt="PiHole Dns-over-Https"/></a><br/>
 
-<h4>Flash the image to the SD card</h4>
+<h4>Flash the image to the SD card</h4><br/>
 
 <p>You can use whatever software you like, i go between: 
 <h5><a href="https://sourceforge.net/projects/win32diskimager/" rel="noopener noreferrer" target="_blank">Win32DiskImager</a></h5> 
@@ -52,7 +52,7 @@ or
 sudo passwd pi
 {% endhighlight %}
 
-<h4>Install Cloudflared</h4>
+<h4>Install Cloudflared</h4><br/>
 
 <p>
 	Download the cloudflared binary, depending on which raspberry pi you use you have some issues.
@@ -135,7 +135,7 @@ sudo systemctl start cloudflared
 sudo systemctl status cloudflared
 {% endhighlight %}
 
-<h4>Install PiHole</h4>
+<h4>Install PiHole</h4><br/>
 
 <p>Download the installer and run it</p>
 
@@ -225,7 +225,7 @@ sudo bash basic-install.sh
 pihole -a -p
 {% endhighlight %}
 
-<h4>Login into the webgui</h4>
+<h4>Login into the webgui</h4><br/>
 
 {% highlight shell %}
 http://<ip Address>/admin/
@@ -247,7 +247,7 @@ http://<ip Address>/admin/
 <p> Wherever you are doing DHCP/Static entries update your DNS to the PiHole's Ip Address
     And that is it, you have setup the PiHole and your DNS queries should be private</p>
 	
-<h4>Troubleshooting</h4>
+<h4>Troubleshooting</h4><br/>
 
 <p>For issues with PiHole, run this command which will reconfigure the pihole instance</p>
 
