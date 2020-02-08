@@ -253,4 +253,22 @@ http://<ip Address>/admin/
 pihole -r
 {% endhighlight %}
 
+<p>If you need to set a static ip address for the Pi, please do this:</p></br>
+
+<p>Edit /etc/network/interfaces. Change the address,network,netmask,broadcast,gateway to match you network</p></br>
+
+{% highlight shell %}
+auto lo
+iface lo inet loopback
+
+auto eth0
+iface eth0 inet static
+  address 192.168.0.42 
+  network 192.168.0.0
+  netmask 255.255.255.0
+  broadcast 192.168.0.255
+  gateway 192.168.0.1
+{% endhighlight %}
+
+<p> run a service nwtworking restart, to complete your change. Note: RThis wont disconnect you from ssh.</p></br>
 <p>For issues with cloudflared, you might need to do some googling to find a cloudflared binary that works with your pi</p>
