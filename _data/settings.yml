@@ -4,7 +4,7 @@ disqus:
   disqus_shortname: 'Stahlz'
 
 # If you are not using Google Analytics, please change 'google-ID' to an empty string
-google-ID: ''
+google-ID: 'UA-128431413-2'
 
 menu: 
   - name: Posts
