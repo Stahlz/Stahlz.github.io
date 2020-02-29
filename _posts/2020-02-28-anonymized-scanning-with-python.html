@@ -50,7 +50,7 @@ def random_agent(self):
     return {'User-Agent': choice(rando_agent)}
 
 test_request = ('https://example.com', headers=random_agent())
-{% endhighlight %}</br>
+{% endhighlight %}
 
 <h3>Adding Tor Proxy to your requests session</h3></br>
 
@@ -95,6 +95,10 @@ proxy = {
 requests.get('https://example.com', proxies=proxy)
 {% endhighlight %}</br>
 
-<h3>Bringing it all together</h3></br>
+<h3>ProxyChains setup</h3></br>
 
-
+<p>Make sure to add this to the bottom or uncomment out if it already there for socks4/5
+{% hightlight bash %}
+socks4 127.0.0.1 9050
+socks5 127.0.0.1 9050
+{% endhighlight %}
