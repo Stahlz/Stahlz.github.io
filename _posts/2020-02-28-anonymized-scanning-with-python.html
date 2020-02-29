@@ -17,7 +17,7 @@ tags: [security, scanning, python, requests, modular]
 
 <h3>Anti User Agent Analysis</h3></br>
 
-{% highlight python %}
+{% highlight shell %}
 from random import choice
 from requests import session
 
@@ -55,7 +55,7 @@ test_request = ('https://example.com', headers=random_agent())
 
 <h3>Adding Tor Proxy to your requests session</h3></br>
 
-{% hightlight python %}
+{% hightlight shell %}
 proxy = {
 	'http': 'socks4://127.0.0.1:9050',
 	'https': 'socks4://127.0.0.1:9050'
@@ -65,7 +65,7 @@ test_request = ('https://example.com', proxies=proxy)
 
 <h3>Changing Tor IP Address through Tor Control Port</h3></br>
 
-{% highlight python %}
+{% highlight shell %}
 from stem import Signal
 from stem.control import Controller
 
@@ -77,7 +77,7 @@ def reset_tor_ip(self):
 
 <h3>Custom Proxy List</h3></br>
 
-{% highlight python %}
+{% highlight shell %}
 from random import choice 
 import requests
 
@@ -102,7 +102,7 @@ requests.get('https://example.com', proxies=proxy)
 
 <p>vi /etc/proxychains.conf</p></br>
 
-{% hightlight bash %}
+{% hightlight shell %}
 socks4 127.0.0.1 9050
 socks5 127.0.0.1 9050
 {% endhighlight %}
