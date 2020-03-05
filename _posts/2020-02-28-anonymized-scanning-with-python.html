@@ -20,7 +20,7 @@ tags: [security, scanning, python, requests, modular]
 
 <h3>Adding Tor Proxy to your requests session</h3></br>
 
-{% hightlight shell %}
+{% highlight shell %}
 proxy = {
 	'http': 'socks4://127.0.0.1:9050',
 	'https': 'socks4://127.0.0.1:9050'
@@ -30,7 +30,7 @@ test_request = ('https://example.com', proxies=proxy)
 
 <h3>Changing Tor IP Address through Tor Control Port</h3></br>
 
-{% highlight shell %}
+{% highlight python %}
 from stem import Signal
 from stem.control import Controller
 
@@ -42,7 +42,7 @@ def reset_tor_ip(self):
 
 <h3>Custom Proxy List</h3></br>
 
-{% highlight shell %}
+{% highlight python %}
 from random import choice 
 import requests
 
@@ -67,7 +67,7 @@ requests.get('https://example.com', proxies=proxy)
 
 <p>vi /etc/proxychains.conf</p></br>
 
-{% hightlight shell %}
+{% highlight shell %}
 socks4 127.0.0.1 9050
 socks5 127.0.0.1 9050
 {% endhighlight %}
