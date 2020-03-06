@@ -15,10 +15,14 @@ tags: [security, scanning, python, requests, modular]
 	This will mainly be focused around reuqests, with the idea of making more modular code.
 </p></br>
 
-<h3>Anti User Agent Analysis</h3></br>
+<h4>Anti User Agent Analysis</h4></br>
+
+<p>Sample code for randomizing your user agents</p></br>
 
 {% highlight python %}
+
 from random import choice
+
 def random_agent(self):
         desktop_agents = ['Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
                      'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36',
@@ -44,22 +48,29 @@ def random_agent(self):
                      'Mozilla/5.0 (compatible; bingbot/2.0; +http://www.bing.com/bingbot.htm)',
                      'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:50.0) Gecko/20100101 Firefox/50.0']
         return {'User-Agent': choice(desktop_agents)}
- 
+
+test_request = requests.get('https://example.com', headers=random_agent())
+
 {% endhighlight %}
 
-<h3>Adding Tor Proxy to your requests session</h3></br>
+<h4>Adding Tor Proxy to your requests session</h4></br>
 
 {% highlight python %}
+
+import requests
+
 proxy = {
 	'http': 'socks4://127.0.0.1:9050',
 	'https': 'socks4://127.0.0.1:9050'
 	}
 test_request = ('https://example.com', proxies=proxy)
+
 {% endhighlight %}
 
-<h3>Changing Tor IP Address through Tor Control Port</h3></br>
+<h4>Changing Tor IP Address through Tor Control Port</h4></br>
 
 {% highlight python %}
+
 from stem import Signal
 from stem.control import Controller
 
@@ -67,11 +78,13 @@ def reset_tor_ip(self):
     with Controller.from_port(port = 9051) as controller:
         controller.authenticate()
         controller.signal(Signal.NEWNYM)
+
 {% endhighlight %}</br>
 
-<h3>Custom Proxy List</h3></br>
+<h4>Custom Proxy List</h4></br>
 
 {% highlight python %}
+
 from random import choice 
 import requests
 
@@ -97,6 +110,8 @@ requests.get('https://example.com', proxies=proxy)
 <p>vi /etc/proxychains.conf</p></br>
 
 {% highlight shell %}
+
 socks4 127.0.0.1 9050
 socks5 127.0.0.1 9050
+
 {% endhighlight %}
