@@ -100,10 +100,12 @@ proxy = {
 	'http': random_proxy(),
 	'https': random_proxy()
 	}
+
 requests.get('https://example.com', proxies=proxy)
+
 {% endhighlight %}
 
-<h3>ProxyChains setup</h3></br>
+<h4>ProxyChains</h4></br>
 
 <p>Make sure to add this to the bottom or uncomment out if it already there for socks4/5</p></br>
 
