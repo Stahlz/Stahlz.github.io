@@ -48,6 +48,11 @@ This way i am freeing up ip addresses, and limiting the amount of addresses that
 The one caveat to this is guest networks, in these networks using a /24 or 255.255.255.0 is fine. Typically this will be used in wifi networks, with isolation of hosts allowing this many addresses is fine.
 </p></br>
 
+<h5>Useful Tip</h5></br>
+
+<p>Using diffrent ip address scheme for each type of network your using is an excellent way to stay organized. Say using a 10.x.x.x for wireless networks, and a 192.168.x.x for servers. Will help you quickly identify and isolate a problem to a certian device type or network, since you wont have to dig through your notes to figure out which network subnet is which.
+</p></br> 
+
 <h4>Vlans</h4></br>
 
 <p>
@@ -63,4 +68,18 @@ The orange networks are segemented into my research vlans. Purple is a managemen
     src="/assets/images/{{page.id}}/vlans.jpg" alt="Vlan Examples"/></a><br/>
 
 <p>I highly recommend having a management vlan for your home network, this vlan should include potentially a desktop which will be used to administer the rest of your devices from inside your home network.
+This will start to make sense when we talk about firewall rules.
 </p></br>
+
+<h4>Wireless</h4></br>
+
+<p>
+Planning out the segementation in wireless networks is also important. Which network should be used for what purpose, and what should we allow to happen on that network.
+This i why you will see two seperate vlans for these guest networks. They also have diffrent subnetting as well.
+</p></br>
+
+<p>In this example i have two networks showing here, one is for IOT devices(Roku's,toasters, etc) and another for general purpose wifi for guests and family.
+</p>
+<a href="/assets/images/{{page.id}}/SSID.jpg"> <img
+    class="center-block img-responsive"
+    src="/assets/images/{{page.id}}/SSID.jpg" alt="SSID Examples"/></a><br/>
