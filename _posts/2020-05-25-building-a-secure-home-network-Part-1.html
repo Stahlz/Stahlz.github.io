@@ -1,0 +1,66 @@
+---
+layout: default
+title: "Building a Secure Home Network - Part 1"
+comments: false
+categories: security
+tags: [infrastructure, unifi]
+---
+
+<p>
+    Building a home network is not easy, let alone a secure one. In this installment we are going to talk about planning out your future networks.
+    This is will be with an emphasis on making them a secure place for you to both seprate your home and work networks. As well as anything else you would like to protect.
+    This will not be an end all be all guide, but it should help you with ideas you need to get started and build your own secure home network.
+</p></br>
+
+<h4>Disclaimer</h4></br>
+
+<p>
+    I am going to be using unifi equipment for my examples. You can use any networking equipment, such as cisco, netgear, etc. Any brand that allows you to have at least a managed switch should be acceptable.
+    Unifi is just my personal prefrence. This is not meant to be an end al guide the network security, it will give you the blueprint to go forth and make your own secure home network.
+</p></br>
+
+<p>
+    Short on cash?
+    <h5><a href="https://www.ebay.com/sch/i.html?_from=R40&_trksid=p2380057.m570.l1313.TR11.TRC1.A0.H0.Xmanaged+switch.TRS0&_nkw=managed+switch&_sacat=0" rel="noopener noreferrer" target="_blank">Ebay-Managed-Switches-Search</a></h5>
+    Ebay is a great place to find used gear, most of the time for a significant discount.
+</p></br>
+
+<h2>Planning is Key</h2></br>
+
+<p>
+    Depending on how many assets your adding, and their functions. You will need to plan out in advance things such as how many vlans, subnets, wireless networks you will need.
+    If you want those networks to talk to one another or to just stritcly be guest networks, etc.
+</p></br>
+
+<h4>Subneting</h4></br>
+
+<p>
+I recommend planning out your subnetting ahead of time. The reason being, that some subnets will only require a certain amount of hosts needed. In alot of my home network vlans, i use a /29 or 255.255.255.248.
+This way i am freeing up ip addresses, and limiting the amount of addresses that can be assigned via DHCP. This works well with Vlaning out your home environment, in that you segment your home networks well with the few adddresses needed per vlan.
+</p></br>
+
+<p>This is a subnetting graph that will show you the maximum usable address per subnet mask</p>
+<a href="/assets/images/{{page.id}}/subnet.jpg"> <img
+    class="center-block img-responsive"
+    src="/assets/images/{{page.id}}/subnet.jpg" alt="Subnetting Graph"/></a><br/>
+
+<p>
+The one caveat to this is guest networks, in these networks using a /24 or 255.255.255.0 is fine. Typically this will be used in wifi networks, with isolation of hosts allowing this many addresses is fine.
+</p></br>
+
+<h4>Vlans</h4></br>
+
+<p>
+Vlans, are the logical seperators of your network. They are the building blocks to both allow and deny traffic to certian devices on your network by grouping assets based upon what ever common denominator you like.
+In most corporate enivoronments, they will break up devices by geological location, or by departments. In your home network i recommend doing it by device type. So a vlan for servers, and a vlan for guest wireless SSID's. Then a vlan, wholely setup for your work from home devices. So on an so forth, until you have planned out your network accordingly.
+</p></br>
+
+<p>In this example i have three Guest networks, with no access to anything else in the environment in Red. These are actually Vlans setup for Guest Wireless Networks.
+The orange networks are segemented into my research vlans. Purple is a management vlan, etc.
+</p> 
+<a href="/assets/images/{{page.id}}/vlans.jpg"> <img
+    class="center-block img-responsive"
+    src="/assets/images/{{page.id}}/vlans.jpg" alt="Vlan Examples"/></a><br/>
+
+<p>I highly recommend having a management vlan for your home network, this vlan should include potentially a desktop which will be used to administer the rest of your devices from inside your home network.
+</p></br>
